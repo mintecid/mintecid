@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINTEC.ID — Editorial</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f0;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        /* Header Masthead */
+        .masthead {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #000;
+        }
+
+        .logo-editorial {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: -1px;
+        }
+
+        .issue-info {
+            text-align: right;
+            font-size: 12px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Hero Section */
+        .hero-editorial {
+            position: relative;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            overflow: hidden;
+        }
+
+        .hero-text {
+            padding: 100px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .eyebrow {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 20px;
+        }
+
+        .hero-headline {
+            font-family: 'Playfair Display', serif;
+            font-size: 86px;
+            font-weight: 900;
+            line-height: 0.95;
+            margin-bottom: 30px;
+            letter-spacing: -3px;
+        }
+
+        .hero-subhead {
+            font-size: 24px;
+            font-weight: 300;
+            color: #666;
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 18px 45px;
+            background: #1a1a1a;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+        }
+
+        .hero-cta:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .hero-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 200px;
+            font-weight: 900;
+            color: rgba(255,255,255,0.1);
+            content: 'M';
+        }
+
+        /* Feature Grid */
+        .feature-section {
+            padding: 100px 50px;
+            background: #fff;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #999;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 900;
+            color: #f0f0f0;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .feature-desc {
+            font-size: 15px;
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Editorial Spread */
+        .editorial-spread {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 0;
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .spread-content {
+            padding: 100px 80px;
+        }
+
+        .spread-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: 40px;
+            line-height: 1.1;
+        }
+
+        .spread-text {
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 30px;
+            color: #ccc;
+        }
+
+        .spread-sidebar {
+            background: #fff;
+            color: #1a1a1a;
+            padding: 100px 50px;
+        }
+
+        .contact-item-mag {
+            padding: 25px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .contact-item-mag:last-child {
+            border-bottom: none;
+        }
+
+        .contact-label-mag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #999;
+        }
+
+        .contact-value-mag {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .contact-value-mag a {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .contact-value-mag a:hover {
+            border-bottom-color: #1a1a1a;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: #f5f5f0;
+            padding: 100px 80px;
+            text-align: center;
+        }
+
+        .quote-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            font-style: italic;
+            line-height: 1.3;
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+
+        .quote-author {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #666;
+        }
+
+        /* Stats Editorial */
+        .stats-editorial {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        .stat-editorial {
+            padding: 60px 40px;
+            text-align: center;
+            border-right: 1px solid #ddd;
+        }
+
+        .stat-editorial:last-child {
+            border-right: none;
+        }
+
+        .stat-num-mag {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 10px;
+        }
+
+        .stat-label-mag {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #999;
+        }
+
+        /* Footer */
+        .footer-editorial {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 50px;
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: 2px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-editorial {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .hero-text {
+                padding: 60px 30px;
+            }
+
+            .hero-headline {
+                font-size: 48px;
+            }
+
+            .hero-image {
+                min-height: 300px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                padding: 0 30px;
+            }
+
+            .editorial-spread {
+                grid-template-columns: 1fr;
+            }
+
+            .spread-content,
+            .spread-sidebar {
+                padding: 60px 30px;
+            }
+
+            .spread-title {
+                font-size: 42px;
+            }
+
+            .stats-editorial {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .stat-editorial {
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Masthead -->
+    <div class="masthead">
+        <div class="logo-editorial">MINTEC</div>
+        <div class="issue-info">
+            Issue No. 01 / October 2025<br>
+            Jakarta Edition
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero-editorial">
+        <div class="hero-text">
+            <div class="eyebrow">The Future Issue</div>
+            <h1 class="hero-headline">Building Tomorrow's Property Tech</h1>
+            <p class="hero-subhead">Where home development meets cutting-edge technology. A new era of innovation begins here.</p>
+            <a href="mailto:info@mintec.id" class="hero-cta">Get Started</a>
+        </div>
+        <div class="hero-image"></div>
+    </div>
+
+    <!-- Features -->
+    <div class="feature-section">
+        <div class="section-label">Our Services</div>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-number">01</div>
+                <h3 class="feature-title">Developer Community</h3>
+                <p class="feature-desc">A thriving network of property developers collaborating on innovative real estate technology solutions and sharing industry insights.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-number">02</div>
+                <h3 class="feature-title">IT Consulting</h3>
+                <p class="feature-desc">Enterprise-grade technology solutions, cloud architecture, and digital transformation strategies tailored for modern businesses.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-number">03</div>
+                <h3 class="feature-title">Property Tech</h3>
+                <p class="feature-desc">Digital platforms for property management, immersive virtual tours, and intelligent smart home integration systems.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-number">04</div>
+                <h3 class="feature-title">System Integration</h3>
+                <p class="feature-desc">Seamless integration of ERP, CRM, and automation workflows designed specifically for property developers.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-number">05</div>
+                <h3 class="feature-title">Training Programs</h3>
+                <p class="feature-desc">Comprehensive technology training and workshops for developers and IT professionals with industry certification.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-number">06</div>
+                <h3 class="feature-title">Innovation Lab</h3>
+                <p class="feature-desc">Research and development initiatives exploring the intersection of property development and emerging technologies.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quote -->
+    <div class="quote-block">
+        <div class="quote-text">"Innovation distinguishes between a leader and a follower in the property technology landscape."</div>
+        <div class="quote-author">— MINTEC Philosophy</div>
+    </div>
+
+    <!-- Editorial Spread -->
+    <div class="editorial-spread">
+        <div class="spread-content">
+            <h2 class="spread-title">About MINTEC</h2>
+            <p class="spread-text">
+                MINTEC.ID represents the convergence of home development expertise and cutting-edge information technology consulting. We are an innovative hub that connects professional developer communities with sophisticated IT solutions.
+            </p>
+            <p class="spread-text">
+                Our mission is to build a comprehensive digital ecosystem for the modern property industry, leveraging advanced technology and data-driven approaches to revolutionize how property development projects are conceived, executed, and managed.
+            </p>
+            <p class="spread-text">
+                Through strategic partnerships, continuous innovation, and unwavering commitment to excellence, we empower developers and businesses to achieve unprecedented levels of efficiency and success in an increasingly digital world.
+            </p>
+        </div>
+
+        <div class="spread-sidebar">
+            <div class="contact-item-mag">
+                <span class="contact-label-mag">Email</span>
+                <span class="contact-value-mag"><a href="mailto:info@mintec.id">info@mintec.id</a></span>
+            </div>
+            <div class="contact-item-mag">
+                <span class="contact-label-mag">Phone</span>
+                <span class="contact-value-mag"><a href="tel:+6281234567890">+62 812-3456-7890</a></span>
+            </div>
+            <div class="contact-item-mag">
+                <span class="contact-label-mag">Location</span>
+                <span class="contact-value-mag">Jakarta Innovation Hub</span>
+            </div>
+            <div class="contact-item-mag">
+                <span class="contact-label-mag">Address</span>
+                <span class="contact-value-mag">Jl. Teknologi No. 123</span>
+            </div>
+            <div class="contact-item-mag">
+                <span class="contact-label-mag">LinkedIn</span>
+                <span class="contact-value-mag"><a href="#">/mintec-id</a></span>
+            </div>
+            <div class="contact-item-mag">
+                <span class="contact-label-mag">GitHub</span>
+                <span class="contact-value-mag"><a href="#">/mintec-id</a></span>
+            </div>
+            <div class="contact-item-mag">
+                <span class="contact-label-mag">Instagram</span>
+                <span class="contact-value-mag"><a href="#">@mintec.id</a></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-editorial">
+        <div class="stat-editorial">
+            <div class="stat-num-mag">150+</div>
+            <div class="stat-label-mag">Clients</div>
+        </div>
+        <div class="stat-editorial">
+            <div class="stat-num-mag">300+</div>
+            <div class="stat-label-mag">Projects</div>
+        </div>
+        <div class="stat-editorial">
+            <div class="stat-num-mag">99.9%</div>
+            <div class="stat-label-mag">Uptime</div>
+        </div>
+        <div class="stat-editorial">
+            <div class="stat-num-mag">24/7</div>
+            <div class="stat-label-mag">Support</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-editorial">
+        © 2025 MINTEC.ID — All Rights Reserved
+    </div>
+
+    <script>
+        // Smooth scroll reveal
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .stat-editorial').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease';
+            observer.observe(el);
+        });
+
+        // Parallax effect on hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImage = document.querySelector('.hero-image');
+            if (heroImage) {
+                heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
