@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINTEC.ID - Initializing...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #00ff41;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.3),
+                        inset 0 0 50px rgba(0, 255, 65, 0.1);
+        }
+
+        .scanline {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 255, 65, 0.1) 50%,
+                transparent 100%
+            );
+            animation: scan 8s linear infinite;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .header {
+            border-bottom: 1px solid #00ff41;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .prompt {
+            color: #00ff41;
+            margin: 5px 0;
+        }
+
+        .prompt::before {
+            content: '> ';
+            color: #ff00ff;
+        }
+
+        .blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: calc(100% - 100px);
+            margin-top: 20px;
+        }
+
+        .panel {
+            background: rgba(0, 20, 40, 0.6);
+            border: 1px solid #00ff41;
+            border-radius: 5px;
+            padding: 20px;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .panel::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .panel::-webkit-scrollbar-thumb {
+            background: #00ff41;
+            border-radius: 4px;
+        }
+
+        .panel-title {
+            color: #ff00ff;
+            font-size: 18px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .panel-title::before {
+            content: '[';
+            color: #00ff41;
+        }
+
+        .panel-title::after {
+            content: ']';
+            color: #00ff41;
+        }
+
+        .service-item, .contact-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 255, 65, 0.05);
+            border-left: 3px solid #00ff41;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover, .contact-item:hover {
+            background: rgba(0, 255, 65, 0.15);
+            transform: translateX(5px);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .service-code {
+            color: #ff00ff;
+            font-size: 14px;
+        }
+
+        .service-name {
+            color: #00ffff;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .service-desc {
+            color: #00ff41;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .status-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 1px solid #00ff41;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            background: #00ff41;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 10px #00ff41; }
+            50% { opacity: 0.3; box-shadow: 0 0 5px #00ff41; }
+        }
+
+        .loading-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(0, 255, 65, 0.2);
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: #00ff41;
+            animation: loading 3s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        .ascii-art {
+            color: #00ffff;
+            font-size: 10px;
+            line-height: 1.2;
+            text-align: center;
+            margin-bottom: 10px;
+            opacity: 0.7;
+        }
+
+        a {
+            color: #00ffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: #ff00ff;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+                overflow-y: auto;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="scanline"></div>
+        
+        <div class="header">
+            <div class="ascii-art">
+ ███╗   ███╗██╗███╗   ██╗████████╗███████╗ ██████╗<br>
+ ████╗ ████║██║████╗  ██║╚══██╔══╝██╔════╝██╔════╝<br>
+ ██╔████╔██║██║██╔██╗ ██║   ██║   █████╗  ██║     <br>
+ ██║╚██╔╝██║██║██║╚██╗██║   ██║   ██╔══╝  ██║     <br>
+ ██║ ╚═╝ ██║██║██║ ╚████║   ██║   ███████╗╚██████╗<br>
+ ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝ ╚═════╝ .ID
+            </div>
+            <div class="prompt">SYSTEM INITIALIZED... BOOTING MINTEC CORE v3.7.2</div>
+            <div class="prompt">LOADING: Home Developer Community & IT Consulting Platform</div>
+            <div class="prompt">STATUS: <span style="color: #00ffff;">ONLINE</span> <span class="blink">█</span></div>
+        </div>
+
+        <div class="grid-container">
+            <div class="panel">
+                <div class="panel-title">Core Services</div>
+                
+                <div class="service-item">
+                    <div class="service-code">SYS_001</div>
+                    <div class="service-name">→ Home Development Community</div>
+                    <div class="service-desc">Komunitas developer profesional untuk kolaborasi proyek properti dan real estate technology</div>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-code">SYS_002</div>
+                    <div class="service-name">→ IT Consulting Services</div>
+                    <div class="service-desc">Solusi teknologi enterprise, cloud architecture, dan digital transformation</div>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-code">SYS_003</div>
+                    <div class="service-name">→ Property Tech Solutions</div>
+                    <div class="service-desc">Platform digital untuk manajemen properti, virtual tour, dan smart home integration</div>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-code">SYS_004</div>
+                    <div class="service-name">→ System Integration</div>
+                    <div class="service-desc">Integrasi sistem ERP, CRM, dan automation untuk developer properti</div>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-code">SYS_005</div>
+                    <div class="service-name">→ Training & Workshop</div>
+                    <div class="service-desc">Pelatihan teknologi terkini untuk developer dan IT professionals</div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">System Information</div>
+                
+                <div class="contact-item">
+                    <div class="service-code">INFO_ABOUT</div>
+                    <div class="service-desc" style="margin-top: 10px; line-height: 1.6;">
+                        MINTEC.ID adalah hub inovatif yang menghubungkan komunitas home developer dengan solusi IT consulting profesional. Kami membangun ekosistem digital untuk industri properti modern.
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="service-code">CONTACT_MAIN</div>
+                    <div class="service-name">Email: <a href="mailto:info@mintec.id">info@mintec.id</a></div>
+                    <div class="service-name">Phone: <a href="tel:+6281234567890">+62 812-3456-7890</a></div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="service-code">LOCATION_HQ</div>
+                    <div class="service-name">Headquarters</div>
+                    <div class="service-desc">Jakarta Innovation Hub<br>Jl. Teknologi No. 123, Jakarta</div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="service-code">NETWORK_SOCIAL</div>
+                    <div class="service-name">Network Channels</div>
+                    <div class="service-desc">
+                        <a href="#" style="margin-right: 15px;">LinkedIn</a>
+                        <a href="#" style="margin-right: 15px;">GitHub</a>
+                        <a href="#" style="margin-right: 15px;">Instagram</a>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="service-code">ACTION_CTA</div>
+                    <div class="service-name" style="color: #ff00ff; font-size: 14px; margin-top: 10px;">
+                        → <a href="mailto:info@nexus-sys.com" style="color: #ff00ff;">INIT_COLLABORATION()</a>
+                    </div>
+                    <div class="service-desc">Mulai proyek Anda bersama kami hari ini</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <div class="status-item">
+                <div class="status-indicator"></div>
+                <span>SYSTEM ONLINE</span>
+            </div>
+            <div class="status-item">
+                <span>UPTIME: 99.9%</span>
+            </div>
+            <div class="status-item">
+                <span>CLIENTS: 150+</span>
+            </div>
+            <div class="status-item">
+                <span>PROJECTS: 300+</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Typing effect on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.prompt');
+            elements.forEach((el, index) => {
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.5s';
+                    el.style.opacity = '1';
+                }, index * 300);
+            });
+
+            // Service items animation
+            const services = document.querySelectorAll('.service-item, .contact-item');
+            services.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, 800 + (index * 100));
+            });
+        });
+
+        // Random glitch effect
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                const container = document.querySelector('.container');
+                container.style.transform = 'translate(' + (Math.random() * 4 - 2) + 'px, ' + (Math.random() * 4 - 2) + 'px)';
+                setTimeout(() => {
+                    container.style.transform = 'translate(0, 0)';
+                }, 50);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
