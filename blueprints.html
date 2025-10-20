@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINTEC.ID - Technical Blueprints</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Roboto+Mono:wght@300;400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: #0a1929;
+            color: #fff;
+            overflow-x: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Blueprint Grid Background */
+        .blueprint-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a1929;
+            background-image: 
+                linear-gradient(rgba(0, 180, 216, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 180, 216, 0.15) 1px, transparent 1px),
+                linear-gradient(rgba(0, 180, 216, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 180, 216, 0.08) 1px, transparent 1px);
+            background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+            background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+            z-index: 0;
+        }
+
+        /* Measurement Lines */
+        .measure-line {
+            position: fixed;
+            background: rgba(0, 180, 216, 0.3);
+            z-index: 1;
+        }
+
+        .measure-h {
+            width: 100%;
+            height: 1px;
+            animation: measureSlide 15s linear infinite;
+        }
+
+        .measure-v {
+            width: 1px;
+            height: 100%;
+            animation: measureSlide 20s linear infinite;
+        }
+
+        @keyframes measureSlide {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        /* Main Drawing Board */
+        .drawing-board {
+            background: rgba(10, 25, 41, 0.95);
+            border: 3px solid #00b4d8;
+            width: 100%;
+            max-width: 1200px;
+            padding: 50px;
+            position: relative;
+            box-shadow: 0 0 0 1px rgba(0, 180, 216, 0.3),
+                        0 0 40px rgba(0, 180, 216, 0.2);
+        }
+
+        /* Corner Markers */
+        .corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 2px solid #00b4d8;
+        }
+
+        .corner.tl { top: -2px; left: -2px; border-right: none; border-bottom: none; }
+        .corner.tr { top: -2px; right: -2px; border-left: none; border-bottom: none; }
+        .corner.bl { bottom: -2px; left: -2px; border-right: none; border-top: none; }
+        .corner.br { bottom: -2px; right: -2px; border-left: none; border-top: none; }
+
+        /* Measurement Labels */
+        .measure-label {
+            position: absolute;
+            font-size: 10px;
+            color: #00b4d8;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .measure-label.top { top: -25px; left: 50%; transform: translateX(-50%); }
+        .measure-label.right { right: -60px; top: 50%; transform: translateY(-50%); }
+        .measure-label.bottom { bottom: -25px; left: 50%; transform: translateX(-50%); }
+        .measure-label.left { left: -60px; top: 50%; transform: translateY(-50%); }
+
+        /* Header */
+        .blueprint-header {
+            border-bottom: 2px solid #00b4d8;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .project-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #00b4d8;
+            letter-spacing: 3px;
+            font-family: 'Architects Daughter', cursive;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+        }
+
+        .project-title::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #00b4d8;
+            animation: drawLine 2s ease-out;
+        }
+
+        @keyframes drawLine {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+            font-size: 11px;
+        }
+
+        .info-item {
+            color: #90e0ef;
+        }
+
+        .info-label {
+            color: #0096c7;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        /* Main Grid Layout */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Specification Box */
+        .spec-box {
+            border: 2px solid #00b4d8;
+            padding: 25px;
+            position: relative;
+            background: rgba(0, 180, 216, 0.03);
+        }
+
+        .spec-box::before {
+            content: attr(data-title);
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #0a1929;
+            padding: 0 10px;
+            font-size: 12px;
+            color: #00b4d8;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        /* Service Items */
+        .service-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-left: 3px solid #00b4d8;
+            background: rgba(0, 180, 216, 0.05);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover {
+            background: rgba(0, 180, 216, 0.1);
+            transform: translateX(5px);
+        }
+
+        .service-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: #48cae4;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .service-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #48cae4;
+            min-width: 30px;
+        }
+
+        .service-content {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #90e0ef;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .service-desc {
+            font-size: 11px;
+            color: #ade8f4;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        /* Technical Notes */
+        .tech-notes {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .note-item {
+            background: rgba(0, 180, 216, 0.05);
+            border: 1px dashed #00b4d8;
+            padding: 15px;
+            font-size: 11px;
+            line-height: 1.6;
+            color: #ade8f4;
+            position: relative;
+        }
+
+        .note-item::before {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            left: -15px;
+            width: 20px;
+            height: 20px;
+            background: #00b4d8;
+            color: #0a1929;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .note-title {
+            font-weight: 700;
+            color: #48cae4;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0, 180, 216, 0.05);
+            border-left: 3px solid #00b4d8;
+            font-size: 11px;
+        }
+
+        .contact-icon {
+            font-size: 20px;
+            color: #48cae4;
+        }
+
+        .contact-text {
+            flex: 1;
+            color: #90e0ef;
+        }
+
+        .contact-text a {
+            color: #00b4d8;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .contact-text a:hover {
+            color: #48cae4;
+            text-decoration: underline;
+        }
+
+        /* Action Button */
+        .action-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px dashed #00b4d8;
+        }
+
+        .blueprint-btn {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 15px 40px;
+            background: transparent;
+            color: #00b4d8;
+            border: 2px solid #00b4d8;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .blueprint-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: #00b4d8;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+            z-index: -1;
+        }
+
+        .blueprint-btn:hover {
+            color: #0a1929;
+            box-shadow: 0 0 20px rgba(0, 180, 216, 0.5);
+        }
+
+        .blueprint-btn:hover::before {
+            width: 120%;
+            height: 300%;
+        }
+
+        /* Title Block (Bottom Right) */
+        .title-block {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            border: 2px solid #00b4d8;
+            padding: 15px;
+            font-size: 9px;
+            background: #0a1929;
+        }
+
+        .title-block-row {
+            display: flex;
+            gap: 20px;
+            margin: 5px 0;
+        }
+
+        .title-block-label {
+            color: #0096c7;
+            font-weight: 700;
+        }
+
+        .title-block-value {
+            color: #90e0ef;
+        }
+
+        /* Sketch Lines Animation */
+        .sketch-line {
+            position: absolute;
+            background: #00b4d8;
+            opacity: 0.3;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .drawing-board {
+                padding: 30px;
+            }
+
+            .project-title {
+                font-size: 32px;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .measure-label {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blueprint-bg"></div>
+
+    <!-- Measurement Lines -->
+    <div class="measure-line measure-h" style="top: 20%;"></div>
+    <div class="measure-line measure-h" style="top: 60%;"></div>
+    <div class="measure-line measure-v" style="left: 30%;"></div>
+    <div class="measure-line measure-v" style="left: 70%;"></div>
+
+    <div class="container">
+        <div class="drawing-board">
+            <!-- Corner Markers -->
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+
+            <!-- Measurement Labels -->
+            <div class="measure-label top">1200mm</div>
+            <div class="measure-label right">800mm</div>
+            <div class="measure-label bottom">SCALE 1:1</div>
+            <div class="measure-label left">A3</div>
+
+            <!-- Header -->
+            <div class="blueprint-header">
+                <div class="project-title">MINTEC.ID</div>
+                <div class="project-info">
+                    <div class="info-item">
+                        <div class="info-label">PROJECT NO.</div>
+                        <div>MTC-2025-001</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">CATEGORY</div>
+                        <div>Home Developer & IT</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">DATE</div>
+                        <div>OCT 2025</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">STATUS</div>
+                        <div>ACTIVE</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="main-grid">
+                <!-- Services Specification -->
+                <div class="spec-box" data-title="SERVICE SPECIFICATIONS">
+                    <div class="service-item">
+                        <div class="service-number">01</div>
+                        <div class="service-content">
+                            <div class="service-title">Home Developer Community</div>
+                            <div class="service-desc">Komunitas developer profesional untuk kolaborasi proyek properti dan real estate technology solutions</div>
+                        </div>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-number">02</div>
+                        <div class="service-content">
+                            <div class="service-title">IT Consulting Services</div>
+                            <div class="service-desc">Solusi teknologi enterprise, cloud architecture, digital transformation, dan business automation</div>
+                        </div>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-number">03</div>
+                        <div class="service-content">
+                            <div class="service-title">Property Tech Solutions</div>
+                            <div class="service-desc">Platform digital untuk manajemen properti, virtual tour 360°, dan smart home integration systems</div>
+                        </div>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-number">04</div>
+                        <div class="service-content">
+                            <div class="service-title">System Integration</div>
+                            <div class="service-desc">Integrasi sistem ERP, CRM, dan automation workflows untuk developer properti modern</div>
+                        </div>
+                    </div>
+
+                    <div class="service-item">
+                        <div class="service-number">05</div>
+                        <div class="service-content">
+                            <div class="service-title">Training & Workshop</div>
+                            <div class="service-desc">Pelatihan teknologi terkini untuk developer dan IT professionals dengan sertifikasi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Notes -->
+                <div class="spec-box" data-title="TECHNICAL NOTES">
+                    <div class="tech-notes">
+                        <div class="note-item">
+                            <span class="note-title">ABOUT</span>
+                            Hub inovatif yang menghubungkan komunitas home developer dengan solusi IT consulting profesional untuk industri properti modern.
+                        </div>
+
+                        <div class="note-item">
+                            <span class="note-title">CLIENTS</span>
+                            150+ satisfied clients across Indonesia with 300+ completed projects and ongoing support.
+                        </div>
+
+                        <div class="note-item">
+                            <span class="note-title">TECHNOLOGY</span>
+                            Latest tech stack including cloud computing, AI/ML, IoT integration, and mobile-first approach.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="spec-box" data-title="CONTACT INFORMATION">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-icon">✉</div>
+                        <div class="contact-text">
+                            <strong>EMAIL</strong><br>
+                            <a href="mailto:info@mintec.id">info@mintec.id</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">☎</div>
+                        <div class="contact-text">
+                            <strong>PHONE</strong><br>
+                            <a href="tel:+6281234567890">+62 812-3456-7890</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">⌂</div>
+                        <div class="contact-text">
+                            <strong>LOCATION</strong><br>
+                            Jakarta Innovation Hub<br>Jl. Teknologi No. 123
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">⚡</div>
+                        <div class="contact-text">
+                            <strong>SOCIAL</strong><br>
+                            <a href="#">LinkedIn</a> | <a href="#">GitHub</a> | <a href="#">Instagram</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="action-section">
+                <button class="blueprint-btn" onclick="location.href='mailto:info@mintec.id'">
+                    Initiate Project
+                </button>
+            </div>
+
+            <!-- Title Block -->
+            <div class="title-block">
+                <div class="title-block-row">
+                    <span class="title-block-label">DRAWN BY:</span>
+                    <span class="title-block-value">MINTEC TEAM</span>
+                </div>
+                <div class="title-block-row">
+                    <span class="title-block-label">CHECKED BY:</span>
+                    <span class="title-block-value">QUALITY ASSURANCE</span>
+                </div>
+                <div class="title-block-row">
+                    <span class="title-block-label">APPROVED BY:</span>
+                    <span class="title-block-value">MANAGEMENT</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Animate measurement lines
+        function createMeasurementAnimation() {
+            const lines = document.querySelectorAll('.measure-line');
+            lines.forEach((line, index) => {
+                line.style.animationDelay = (index * 2) + 's';
+            });
+        }
+
+        createMeasurementAnimation();
+
+        // Draw line animation on scroll/load
+        window.addEventListener('load', () => {
+            const items = document.querySelectorAll('.service-item, .note-item, .contact-item');
+            items.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                setTimeout(() => {
+                    item.style.transition = 'all 0.5s ease';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                }, index * 100);
+            });
+        });
+
+        // Interactive corner markers
+        const corners = document.querySelectorAll('.corner');
+        corners.forEach(corner => {
+            corner.addEventListener('mouseenter', function() {
+                this.style.borderColor = '#48cae4';
+                this.style.transform = 'scale(1.2)';
+                this.style.transition = 'all 0.3s ease';
+            });
+            corner.addEventListener('mouseleave', function() {
+                this.style.borderColor = '#00b4d8';
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Parallax effect on grid
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            const bg = document.querySelector('.blueprint-bg');
+            bg.style.backgroundPosition = `${x * 20}px ${y * 20}px`;
+        });
+    </script>
+</body>
+</html>
