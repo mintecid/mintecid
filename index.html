@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mintec@server:~$ systemctl start mintec.service</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Ubuntu Mono', monospace;
+            background: #300a24;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .boot-screen {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .ubuntu-logo {
+            text-align: center;
+            margin: 40px 0;
+            animation: fadeIn 1s ease;
+        }
+
+        .ubuntu-text {
+            font-size: 48px;
+            font-weight: 700;
+            color: #dd4814;
+            text-shadow: 0 0 20px rgba(221, 72, 20, 0.5);
+            letter-spacing: 3px;
+        }
+
+        .ubuntu-version {
+            font-size: 14px;
+            color: #aea79f;
+            margin-top: 10px;
+        }
+
+        .boot-log {
+            margin: 30px 0;
+        }
+
+        .boot-line {
+            margin: 3px 0;
+            font-size: 14px;
+            animation: typeLine 0.5s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .boot-line.success::before {
+            content: '[  OK  ]';
+            color: #4e9a06;
+            font-weight: 700;
+        }
+
+        .boot-line.info::before {
+            content: '[ INFO ]';
+            color: #729fcf;
+            font-weight: 700;
+        }
+
+        .boot-line.start::before {
+            content: '[START]';
+            color: #edd400;
+            font-weight: 700;
+        }
+
+        @keyframes typeLine {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .service-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .service-block {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #5c3566;
+            border-left: 4px solid #4e9a06;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-block:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: #dd4814;
+            transform: translateX(5px);
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .service-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #dd4814;
+        }
+
+        .service-status {
+            font-size: 12px;
+            padding: 4px 12px;
+            background: #4e9a06;
+            color: #fff;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+
+        .service-desc {
+            font-size: 13px;
+            color: #aea79f;
+            line-height: 1.6;
+        }
+
+        .service-id {
+            font-size: 11px;
+            color: #729fcf;
+            margin-top: 10px;
+        }
+
+        .system-info {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #5c3566;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .info-title {
+            font-size: 20px;
+            color: #dd4814;
+            margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-title::before {
+            content: '●';
+            color: #4e9a06;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 2px solid #729fcf;
+        }
+
+        .info-label {
+            color: #aea79f;
+        }
+
+        .info-value {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .info-value a {
+            color: #729fcf;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .info-value a:hover {
+            color: #dd4814;
+            border-bottom-color: #dd4814;
+        }
+
+        .terminal-prompt {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #5c3566;
+            padding: 20px;
+            margin: 40px 0;
+        }
+
+        .prompt-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .prompt-user {
+            color: #4e9a06;
+            font-weight: 700;
+        }
+
+        .prompt-separator {
+            color: #aea79f;
+        }
+
+        .prompt-path {
+            color: #729fcf;
+            font-weight: 700;
+        }
+
+        .prompt-symbol {
+            color: #fff;
+        }
+
+        .command-output {
+            margin-left: 20px;
+            color: #aea79f;
+            line-height: 1.8;
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 35px;
+            background: #dd4814;
+            color: #fff;
+            border: none;
+            font-family: 'Ubuntu Mono', monospace;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin: 20px 0;
+        }
+
+        .action-button:hover {
+            background: #cc3e10;
+            box-shadow: 0 5px 20px rgba(221, 72, 20, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .action-button::before {
+            content: '▶';
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .stat-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #5c3566;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            border-color: #dd4814;
+            background: rgba(221, 72, 20, 0.1);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #4e9a06;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #aea79f;
+            text-transform: uppercase;
+        }
+
+        .progress-container {
+            margin: 20px 0;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            color: #aea79f;
+            margin-bottom: 5px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4e9a06;
+            animation: progressLoad 3s ease-in-out infinite;
+        }
+
+        @keyframes progressLoad {
+            0% { width: 0%; }
+            50% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        .boot-footer {
+            text-align: center;
+            padding: 30px;
+            color: #aea79f;
+            font-size: 12px;
+            border-top: 1px solid #5c3566;
+            margin-top: 60px;
+        }
+
+        .cursor-blink {
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .boot-screen {
+                padding: 20px;
+            }
+
+            .ubuntu-text {
+                font-size: 32px;
+            }
+
+            .service-container {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #300a24;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #dd4814;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cc3e10;
+        }
+    </style>
+</head>
+<body>
+    <div class="boot-screen">
+        <!-- Ubuntu Logo -->
+        <div class="ubuntu-logo">
+            <div class="ubuntu-text">MINTEC.ID</div>
+            <div class="ubuntu-version">Small Team. Big Solutions.</div>
+            <!-- <div class="ubuntu-version">No Corporate BS Edition</div> -->
+            <!-- <div class="ubuntu-version">Professional Mode Activated</div> -->
+        </div>
+
+        <!-- Boot Log -->
+        <div class="boot-log">
+            <div class="boot-line start">Starting MINTEC Services...</div>
+            <div class="boot-line success">Loaded Strategic Consulting Module</div>
+            <div class="boot-line success">Loaded Custom Development Module</div>
+            <div class="boot-line success">Loaded Infrastructure & DevOps Module</div>
+            <div class="boot-line success">Loaded Partnership Services Module</div>
+            <div class="boot-line info">Network interfaces: eth0 - UP</div>
+            <div class="boot-line info">Listening on 0.0.0.0:443 (HTTPS)</div>
+            <div class="boot-line success">Started MINTEC Main Service</div>
+            <div class="boot-line info">System ready. All services online.</div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-label">System Status</div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Service Status -->
+        <div class="service-container">
+            <div class="service-block">
+                <div class="service-header">
+                    <div class="service-name">strategic-consulting.service</div>
+                    <div class="service-status">ACTIVE</div>
+                </div>
+                <div class="service-desc">
+                    Technology strategy, system architecture, technical advisory. We help you make smart tech decisions.
+                </div>
+                <div class="service-id">● Loaded: /srv/consulting/strategic.service</div>
+            </div>
+
+            <div class="service-block">
+                <div class="service-header">
+                    <div class="service-name">custom-development.service</div>
+                    <div class="service-status">ACTIVE</div>
+                </div>
+                <div class="service-desc">
+                    Web & mobile apps, system integration, APIs. Clean code, thoughtful design, built to last.
+                </div>
+                <div class="service-id">● Loaded: /srv/development/custom.service</div>
+            </div>
+
+            <div class="service-block">
+                <div class="service-header">
+                    <div class="service-name">infrastructure-devops.service</div>
+                    <div class="service-status">ACTIVE</div>
+                </div>
+                <div class="service-desc">
+                    Cloud setup, server management, monitoring, automation. Solid infrastructure that scales.
+                </div>
+                <div class="service-id">● Loaded: /srv/infra/devops.service</div>
+            </div>
+
+            <div class="service-block">
+                <div class="service-header">
+                    <div class="service-name">ongoing-partnership.service</div>
+                    <div class="service-status">ACTIVE</div>
+                </div>
+                <div class="service-desc">
+                    Long-term support, maintenance, continuous improvement. We're here beyond launch.
+                </div>
+                <div class="service-id">● Loaded: /srv/partnership/ongoing.service</div>
+            </div>
+        </div>
+
+        <!-- System Information -->
+        <div class="system-info">
+            <div class="info-title">About MINTEC</div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Type:</span>
+                    <span class="info-value">Boutique Consultancy</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Focus:</span>
+                    <span class="info-value">Quality over Quantity</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value"><a href="mailto:info@mintec.id">info@mintec.id</a></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Phone:</span>
+                    <span class="info-value"><a href="tel:+6281234567890">+62 812-3456-7890</a></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Location:</span>
+                    <span class="info-value">Jakarta, Indonesia</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Approach:</span>
+                    <span class="info-value">Senior Expertise Only</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">GitHub:</span>
+                    <span class="info-value"><a href="#">/mintec-id</a></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">LinkedIn:</span>
+                    <span class="info-value"><a href="#">/mintec-id</a></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value">Direct</div>
+                <div class="stat-label">Communication</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">Senior</div>
+                <div class="stat-label">Expertise</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">Flexible</div>
+                <div class="stat-label">Team Assembly</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">Long-term</div>
+                <div class="stat-label">Partnership</div>
+            </div>
+        </div>
+
+        <!-- Terminal Prompt -->
+        <div class="terminal-prompt">
+            <div class="prompt-line">
+                <span class="prompt-user">root@mintec</span>
+                <span class="prompt-separator">:</span>
+                <span class="prompt-path">~</span>
+                <span class="prompt-symbol">$</span>
+                <span style="color: #fff;">cat /philosophy.txt</span>
+            </div>
+            <div class="command-output">
+                Small by design. Selective by choice.<br>
+                <br>
+                We work with a curated network of professionals to deliver<br>
+                quality solutions. Direct access to senior expertise, no layers,<br>
+                no bureaucracy. Just thoughtful technology work that matters.<br>
+                <br>
+                Strategy first. Execution second. Partnership always.
+            </div>
+            <div class="prompt-line" style="margin-top: 20px;">
+                <span class="prompt-user">root@mintec</span>
+                <span class="prompt-separator">:</span>
+                <span class="prompt-path">~</span>
+                <span class="prompt-symbol">$</span>
+                <span class="cursor-blink">█</span>
+            </div>
+        </div>
+
+        <!-- Action Button -->
+        <div style="text-align: center;">
+            <a href="mailto:info@mintec.id" class="action-button">
+                Start Conversation
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="boot-footer">
+            © 2025 MINTEC.ID — Boutique Technology Consultancy<br>
+            mintec@server:~$ Small team. Big impact. Direct communication.
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            const bootLines = document.querySelectorAll('.boot-line');
+            bootLines.forEach((line, index) => {
+                line.style.opacity = '0';
+                setTimeout(() => {
+                    line.style.transition = 'opacity 0.3s ease';
+                    line.style.opacity = '1';
+                }, index * 200);
+            });
+
+            const services = document.querySelectorAll('.service-block');
+            services.forEach((service, index) => {
+                service.style.opacity = '0';
+                service.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    service.style.transition = 'all 0.5s ease';
+                    service.style.opacity = '1';
+                    service.style.transform = 'translateY(0)';
+                }, 1500 + (index * 100));
+            });
+        });
+
+        setInterval(() => {
+            const statuses = document.querySelectorAll('.service-status');
+            statuses.forEach(status => {
+                status.style.opacity = '0.5';
+                setTimeout(() => {
+                    status.style.opacity = '1';
+                }, 100);
+            });
+        }, 5000);
+    </script>
+</body>
+</html>
