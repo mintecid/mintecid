@@ -21,14 +21,12 @@
             line-height: 1.6;
         }
 
-        /* Boot screen container */
         .boot-screen {
             padding: 40px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* Ubuntu logo */
         .ubuntu-logo {
             text-align: center;
             margin: 40px 0;
@@ -49,7 +47,6 @@
             margin-top: 10px;
         }
 
-        /* Boot messages */
         .boot-log {
             margin: 30px 0;
         }
@@ -91,7 +88,6 @@
             to { opacity: 1; }
         }
 
-        /* Service status blocks */
         .service-container {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -148,7 +144,6 @@
             margin-top: 10px;
         }
 
-        /* System info panel */
         .system-info {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid #5c3566;
@@ -212,7 +207,6 @@
             border-bottom-color: #dd4814;
         }
 
-        /* Command prompt */
         .terminal-prompt {
             background: rgba(0, 0, 0, 0.5);
             border: 1px solid #5c3566;
@@ -251,7 +245,6 @@
             line-height: 1.8;
         }
 
-        /* Action button */
         .action-button {
             display: inline-flex;
             align-items: center;
@@ -279,7 +272,6 @@
             content: '▶';
         }
 
-        /* Stats bar */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -313,7 +305,6 @@
             text-transform: uppercase;
         }
 
-        /* Progress bar */
         .progress-container {
             margin: 20px 0;
         }
@@ -344,7 +335,6 @@
             100% { width: 0%; }
         }
 
-        /* Footer */
         .boot-footer {
             text-align: center;
             padding: 30px;
@@ -354,7 +344,6 @@
             margin-top: 60px;
         }
 
-        /* Cursor blink */
         .cursor-blink {
             animation: blink 1s infinite;
         }
@@ -364,7 +353,6 @@
             51%, 100% { opacity: 0; }
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .boot-screen {
                 padding: 20px;
@@ -387,7 +375,6 @@
             }
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -411,25 +398,27 @@
         <!-- Ubuntu Logo -->
         <div class="ubuntu-logo">
             <div class="ubuntu-text">MINTEC.ID</div>
-            <div class="ubuntu-version">MINTEC Operating System</div>
+            <div class="ubuntu-version">Small Team. Big Solutions.</div>
+            <!-- <div class="ubuntu-version">No Corporate BS Edition</div> -->
+            <!-- <div class="ubuntu-version">Professional Mode Activated</div> -->
         </div>
 
         <!-- Boot Log -->
         <div class="boot-log">
-            <div class="boot-line start">Starting MINTEC Home Developer Service...</div>
-            <div class="boot-line success">Loaded IT Consulting Module</div>
-            <div class="boot-line success">Loaded Property Tech Solutions</div>
-            <div class="boot-line success">Loaded System Integration Framework</div>
-            <div class="boot-line success">Loaded Training & Workshop Programs</div>
+            <div class="boot-line start">Starting MINTEC Services...</div>
+            <div class="boot-line success">Loaded Strategic Consulting Module</div>
+            <div class="boot-line success">Loaded Custom Development Module</div>
+            <div class="boot-line success">Loaded Infrastructure & DevOps Module</div>
+            <div class="boot-line success">Loaded Partnership Services Module</div>
             <div class="boot-line info">Network interfaces: eth0 - UP</div>
             <div class="boot-line info">Listening on 0.0.0.0:443 (HTTPS)</div>
             <div class="boot-line success">Started MINTEC Main Service</div>
-            <div class="boot-line info">System ready to accept connections</div>
+            <div class="boot-line info">System ready. All services online.</div>
         </div>
 
         <!-- Progress Bar -->
         <div class="progress-container">
-            <div class="progress-label">System Load Average</div>
+            <div class="progress-label">System Status</div>
             <div class="progress-bar">
                 <div class="progress-fill"></div>
             </div>
@@ -439,71 +428,60 @@
         <div class="service-container">
             <div class="service-block">
                 <div class="service-header">
-                    <div class="service-name">home-developer.service</div>
+                    <div class="service-name">strategic-consulting.service</div>
                     <div class="service-status">ACTIVE</div>
                 </div>
                 <div class="service-desc">
-                    Komunitas developer profesional untuk kolaborasi proyek properti dan real estate technology solutions
+                    Technology strategy, system architecture, technical advisory. We help you make smart tech decisions.
                 </div>
-                <div class="service-id">● Loaded: /etc/systemd/system/home-developer.service</div>
+                <div class="service-id">● Loaded: /srv/consulting/strategic.service</div>
             </div>
 
             <div class="service-block">
                 <div class="service-header">
-                    <div class="service-name">it-consulting.service</div>
+                    <div class="service-name">custom-development.service</div>
                     <div class="service-status">ACTIVE</div>
                 </div>
                 <div class="service-desc">
-                    Enterprise technology solutions, cloud architecture, dan digital transformation services
+                    Web & mobile apps, system integration, APIs. Clean code, thoughtful design, built to last.
                 </div>
-                <div class="service-id">● Loaded: /etc/systemd/system/it-consulting.service</div>
+                <div class="service-id">● Loaded: /srv/development/custom.service</div>
             </div>
 
             <div class="service-block">
                 <div class="service-header">
-                    <div class="service-name">property-tech.service</div>
+                    <div class="service-name">infrastructure-devops.service</div>
                     <div class="service-status">ACTIVE</div>
                 </div>
                 <div class="service-desc">
-                    Platform digital untuk manajemen properti, virtual tour 360°, dan smart home integration
+                    Cloud setup, server management, monitoring, automation. Solid infrastructure that scales.
                 </div>
-                <div class="service-id">● Loaded: /etc/systemd/system/property-tech.service</div>
+                <div class="service-id">● Loaded: /srv/infra/devops.service</div>
             </div>
 
             <div class="service-block">
                 <div class="service-header">
-                    <div class="service-name">system-integration.service</div>
+                    <div class="service-name">ongoing-partnership.service</div>
                     <div class="service-status">ACTIVE</div>
                 </div>
                 <div class="service-desc">
-                    Integrasi sistem ERP, CRM, dan automation workflows untuk developer properti modern
+                    Long-term support, maintenance, continuous improvement. We're here beyond launch.
                 </div>
-                <div class="service-id">● Loaded: /etc/systemd/system/integration.service</div>
-            </div>
-
-            <div class="service-block">
-                <div class="service-header">
-                    <div class="service-name">training.service</div>
-                    <div class="service-status">ACTIVE</div>
-                </div>
-                <div class="service-desc">
-                    Pelatihan teknologi terkini untuk developer dan IT professionals dengan sertifikasi
-                </div>
-                <div class="service-id">● Loaded: /etc/systemd/system/training.service</div>
+                <div class="service-id">● Loaded: /srv/partnership/ongoing.service</div>
             </div>
         </div>
 
         <!-- System Information -->
         <div class="system-info">
-            <div class="info-title">System Information</div>
+            <div class="info-title">About MINTEC</div>
             <div class="info-grid">
                 <div class="info-item">
-                    <span class="info-label">Hostname:</span>
-                    <span class="info-value">mintec.id</span>
+                    <span class="info-label">Type:</span>
+                    <span class="info-value">Boutique Consultancy</span>
                 </div>
                 <div class="info-item">
-                    <span class="info-label">Kernel:</span>
-                    <span class="info-value">Linux 6.8.0</span>
+                    <span class="info-label">Focus:</span>
+                    <span class="info-value">Quality over Quantity</span>
                 </div>
                 <div class="info-item">
                     <span class="info-label">Email:</span>
@@ -515,11 +493,11 @@
                 </div>
                 <div class="info-item">
                     <span class="info-label">Location:</span>
-                    <span class="info-value">Jakarta Innovation Hub</span>
+                    <span class="info-value">Jakarta, Indonesia</span>
                 </div>
                 <div class="info-item">
-                    <span class="info-label">Address:</span>
-                    <span class="info-value">Jl. Teknologi No. 123</span>
+                    <span class="info-label">Approach:</span>
+                    <span class="info-value">Senior Expertise Only</span>
                 </div>
                 <div class="info-item">
                     <span class="info-label">GitHub:</span>
@@ -535,20 +513,20 @@
         <!-- Stats -->
         <div class="stats-bar">
             <div class="stat-item">
-                <div class="stat-value">150+</div>
-                <div class="stat-label">Active Clients</div>
+                <div class="stat-value">Direct</div>
+                <div class="stat-label">Communication</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value">300+</div>
-                <div class="stat-label">Projects Deployed</div>
+                <div class="stat-value">Senior</div>
+                <div class="stat-label">Expertise</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value">99.9%</div>
-                <div class="stat-label">System Uptime</div>
+                <div class="stat-value">Flexible</div>
+                <div class="stat-label">Team Assembly</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value">24/7</div>
-                <div class="stat-label">Support Available</div>
+                <div class="stat-value">Long-term</div>
+                <div class="stat-label">Partnership</div>
             </div>
         </div>
 
@@ -559,12 +537,16 @@
                 <span class="prompt-separator">:</span>
                 <span class="prompt-path">~</span>
                 <span class="prompt-symbol">$</span>
-                <span style="color: #fff;">cat /about.txt</span>
+                <span style="color: #fff;">cat /philosophy.txt</span>
             </div>
             <div class="command-output">
-                Hub inovatif yang menghubungkan komunitas home developer dengan<br>
-                solusi IT consulting profesional. Kami membangun ekosistem digital<br>
-                untuk industri properti modern dengan teknologi cutting-edge.
+                Small by design. Selective by choice.<br>
+                <br>
+                We work with a curated network of professionals to deliver<br>
+                quality solutions. Direct access to senior expertise, no layers,<br>
+                no bureaucracy. Just thoughtful technology work that matters.<br>
+                <br>
+                Strategy first. Execution second. Partnership always.
             </div>
             <div class="prompt-line" style="margin-top: 20px;">
                 <span class="prompt-user">root@mintec</span>
@@ -578,19 +560,18 @@
         <!-- Action Button -->
         <div style="text-align: center;">
             <a href="mailto:info@mintec.id" class="action-button">
-                systemctl start project
+                Start Conversation
             </a>
         </div>
 
         <!-- Footer -->
         <div class="boot-footer">
-            © 2025 MINTEC.ID — All services running • System healthy<br>
-            mintec@server:~$ uptime -s 2025-01-01 00:00:00
+            © 2025 MINTEC.ID — Boutique Technology Consultancy<br>
+            mintec@server:~$ Small team. Big impact. Direct communication.
         </div>
     </div>
 
     <script>
-        // Animate boot lines on load
         window.addEventListener('load', () => {
             const bootLines = document.querySelectorAll('.boot-line');
             bootLines.forEach((line, index) => {
@@ -601,7 +582,6 @@
                 }, index * 200);
             });
 
-            // Animate service blocks
             const services = document.querySelectorAll('.service-block');
             services.forEach((service, index) => {
                 service.style.opacity = '0';
@@ -614,7 +594,6 @@
             });
         });
 
-        // Random service status updates (visual effect)
         setInterval(() => {
             const statuses = document.querySelectorAll('.service-status');
             statuses.forEach(status => {
